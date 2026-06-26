@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Raw data loaded from Telegram scraper JSON files"
+    schema: raw
+    tables:
+      - name: telegram_messages
+        description: "Raw Telegram messages from Ethiopian medical channels"
+        columns:
+          - name: message_id
+            description: "Unique Telegram message ID"
+          - name: channel_name
+            description: "Telegram channel username"
+          - name: channel_title
+            description: "Display name of the channel"
+          - name: message_date
+            description: "When the message was posted"
+          - name: message_text
+            description: "Full text of the message"
+          - name: has_media
+            description: "Whether message has media"
+          - name: image_path
+            description: "Path to downloaded image"
+          - name: views
+            description: "Number of views"
+          - name: forwards
+            description: "Number of forwards"
+          - name: scraped_at
+            description: "When we scraped this message"

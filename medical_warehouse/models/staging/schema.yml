@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: stg_telegram_messages
+    description: "Cleaned and standardized Telegram messages ready for modeling"
+    columns:
+      - name: message_id
+        description: "Unique Telegram message ID"
+        data_tests:
+          - not_null
+      - name: channel_name
+        description: "Telegram channel username"
+        data_tests:
+          - not_null
+      - name: message_date
+        description: "When the message was posted"
+        data_tests:
+          - not_null
+      - name: message_length
+        description: "Number of characters in message text"
+        data_tests:
+          - not_null
+      - name: has_image
+        description: "TRUE if message has a downloaded image"
+        data_tests:
+          - not_null
+      - name: views
+        description: "Number of views — always >= 0"
+        data_tests:
+          - not_null
+      - name: forwards
+        description: "Number of forwards — always >= 0"
+        data_tests:
+          - not_null
