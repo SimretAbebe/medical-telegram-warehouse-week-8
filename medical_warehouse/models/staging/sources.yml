@@ -7,24 +7,17 @@ sources:
     tables:
       - name: telegram_messages
         description: "Raw Telegram messages from Ethiopian medical channels"
+
+      - name: image_detections
+        description: "YOLO object detection results for downloaded images"
         columns:
           - name: message_id
-            description: "Unique Telegram message ID"
+            description: "Telegram message ID the image belongs to"
           - name: channel_name
-            description: "Telegram channel username"
-          - name: channel_title
-            description: "Display name of the channel"
-          - name: message_date
-            description: "When the message was posted"
-          - name: message_text
-            description: "Full text of the message"
-          - name: has_media
-            description: "Whether message has media"
-          - name: image_path
-            description: "Path to downloaded image"
-          - name: views
-            description: "Number of views"
-          - name: forwards
-            description: "Number of forwards"
-          - name: scraped_at
-            description: "When we scraped this message"
+            description: "Channel the image came from"
+          - name: class_name
+            description: "Object detected by YOLO e.g. bottle, person"
+          - name: confidence
+            description: "How confident YOLO is — 0.0 to 1.0"
+          - name: image_category
+            description: "promotional, product_display, lifestyle, or other"
