@@ -23,67 +23,66 @@ Key capabilities:
 ---
 
 ## Repository Structure
+```
+Week-8/
 
-medical-telegram-warehouse/
+├── .github/
+│ └── workflows/
+│ └── unittests.yml # GitHub Actions CI pipeline
 
-├── `.github/`
-│ └── `workflows/`
-│ └── `unittests.yml` # GitHub Actions CI pipeline
+├── .env 
+├── .gitignore
+├── requirements.txt # Python dependencies
+├── README.md
+├── docker-compose.yml # Containerized orchestration setup
+├── Dockerfile # Image build definition
 
-├── `.env` # Secrets — DO NOT COMMIT
-├── `.env.example` # Safe template for environment setup
-├── `.gitignore`
-├── `requirements.txt` # Python dependencies
-├── `README.md`
-├── `docker-compose.yml` # Containerized orchestration setup
-├── `Dockerfile` # Image build definition
+├── data/
+│ └── raw/
+│ ├── telegram_messages/ # JSON files partitioned by date
+│ │ └── YYYY-MM-DD/
+│ │ └── channel_name.json
+│ └── images/ # Downloaded images by channel
+│ └── channel_name/
+│ └── message_id.jpg
 
-├── `data/`
-│ └── `raw/`
-│ ├── `telegram_messages/` # JSON files partitioned by date
-│ │ └── `YYYY-MM-DD/`
-│ │ └── `channel_name.json`
-│ └── `images/` # Downloaded images by channel
-│ └── `channel_name/`
-│ └── `message_id.jpg`
+├── medical_warehouse/ # dbt project
+│ ├── dbt_project.yml
+│ ├── profiles.yml
+│ ├── models/
+│ │ ├── staging/
+│ │ │ ├── sources.yml
+│ │ │ ├── schema.yml
+│ │ │ └── stg_telegram_messages.sql
+│ │ └── marts/
+│ │ ├── schema.yml
+│ │ ├── dim_channels.sql
+│ │ ├── dim_dates.sql
+│ │ └── fct_messages.sql
+│ └── tests/
+│ ├── assert_no_future_messages.sql
+│ └── assert_positive_views.sql
 
-├── `medical_warehouse/` # dbt project
-│ ├── `dbt_project.yml`
-│ ├── `profiles.yml`
-│ ├── `models/`
-│ │ ├── `staging/`
-│ │ │ ├── `sources.yml`
-│ │ │ ├── `schema.yml`
-│ │ │ └── `stg_telegram_messages.sql`
-│ │ └── `marts/`
-│ │ ├── `schema.yml`
-│ │ ├── `dim_channels.sql`
-│ │ ├── `dim_dates.sql`
-│ │ └── `fct_messages.sql`
-│ └── `tests/`
-│ ├── `assert_no_future_messages.sql`
-│ └── `assert_positive_views.sql`
+├── src/
+│ ├── __init__.py
+│ ├── scraper.py # Telegram scraping pipeline
+│ ├── utils.py # Helper functions
+│ └── load_to_postgres.py # Data lake to PostgreSQL loader
 
-├── `src/`
-│ ├── `__init__.py`
-│ ├── `scraper.py` # Telegram scraping pipeline
-│ ├── `utils.py` # Helper functions
-│ └── `load_to_postgres.py` # Data lake to PostgreSQL loader
+├── logs/ # Scraping activity logs
+├── notebooks/
+├── api/
+│ ├── __init__.py
+│ ├── main.py
+│ ├── database.py
+│ └── schemas.py
 
-├── `logs/` # Scraping activity logs
-├── `notebooks/`
-├── `api/`
-│ ├── `__init__.py`
-│ ├── `main.py`
-│ ├── `database.py`
-│ └── `schemas.py`
+├── tests/
+│ └── test_placeholder.py
 
-├── `tests/`
-│ └── `test_placeholder.py`
-
-└── `scripts/`
-└── `run_dbt.sh`
-
+└── scripts/
+└── run_dbt.sh
+```
 ---
 
 ## Getting Started
