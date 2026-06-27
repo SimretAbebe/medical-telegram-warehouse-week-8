@@ -131,7 +131,7 @@ copy .env.example .env
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/medical-telegram-warehouse.git
-cd medical-telegram-warehouse
+cd Week-8
 ```
 
 ---
