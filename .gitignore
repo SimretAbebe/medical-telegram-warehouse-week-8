@@ -60,3 +60,13 @@ yolov8*.pt
 
 # IDEs
 .idea/
+
+# Backup and temp files
+*.bak
+tmp*/
+
+# Telegram session backups
+telegram_session*
+
+# Raw detection outputs
+data/raw/yolo_detections.csv
