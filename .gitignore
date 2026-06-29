@@ -37,3 +37,36 @@ medical_warehouse/logs/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Telethon / Telegram sessions
+telegram_session
+telegram_session.session
+*.session
+
+# Log files
+logs/
+*.log
+
+# Model weights (large binaries)
+yolov8*.pt
+
+# Environment files
+.env.*
+
+# Python tooling caches
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# IDEs
+.idea/
+
+# Backup and temp files
+*.bak
+tmp*/
+
+# Telegram session backups
+telegram_session*
+
+# Raw detection outputs
+data/raw/yolo_detections.csv

@@ -33,36 +33,53 @@ async def scrape_channel(client: TelegramClient, channel_name: str) -> None:
             return
         logger.info(f"Connected to channel: {entity.title}")
 
-        # Loop through messages one by one
-        async for message in client.iter_messages(entity, limit=SCRAPE_LIMIT):
-            # Extract all the fields I need
-            message_data = {
-                "message_id": message.id,
-                "channel_name": channel_name,
-                "channel_title": entity.title,
-                "message_date": str(message.date),
-                "message_text": message.text or "",
-                "has_media": message.media is not None,
-                "image_path": None,
-                "views": message.views or 0,
-                "forwards": message.forwards or 0,
-                "scraped_at": str(datetime.now())
-            }
+        # Iterate messages safely so one bad message does not stop the whole channel.
+        message_iter = client.iter_messages(entity, limit=SCRAPE_LIMIT)
+        while True:
+            try:
+                message = await message_iter.__anext__()
+            except StopAsyncIteration:
+                break
+            except Exception as e:
+                logger.error(f"Failed to fetch a message from {channel_name}: {e}")
+                continue
 
-            # Download image if the message has a photo
-            if isinstance(message.media, MessageMediaPhoto):
-                try:
-                    image_path = get_image_path(channel_name, message.id)
-                    await client.download_media(message.media, file=image_path)
-                    message_data["image_path"] = image_path
-                    logger.debug(f"Downloaded image for message {message.id}")
-                except Exception as e:
-                    logger.error(f"Failed to download image for message {message.id}: {e}")
+            if message is None:
+                continue
 
-            message_date = message.date.strftime("%Y-%m-%d")
-            if message_date not in messages_by_date:
-                messages_by_date[message_date] = []
-            messages_by_date[message_date].append(message_data)
+            try:
+                message_data = {
+                    "message_id": message.id,
+                    "channel_name": channel_name,
+                    "channel_title": entity.title,
+                    "message_date": str(message.date),
+                    "message_text": message.text or "",
+                    "has_media": message.media is not None,
+                    "image_path": None,
+                    "views": message.views or 0,
+                    "forwards": message.forwards or 0,
+                    "scraped_at": str(datetime.now())
+                }
+
+                # Download image if the message has a photo
+                if isinstance(message.media, MessageMediaPhoto):
+                    try:
+                        image_path = get_image_path(channel_name, message.id)
+                        await client.download_media(message.media, file=image_path)
+                        message_data["image_path"] = image_path
+                        logger.debug(f"Downloaded image for message {message.id}")
+                    except Exception as e:
+                        logger.error(f"Failed to download image for message {message.id}: {e}")
+                        message_data["image_path"] = None
+
+                message_date = message.date.strftime("%Y-%m-%d")
+                if message_date not in messages_by_date:
+                    messages_by_date[message_date] = []
+                messages_by_date[message_date].append(message_data)
+
+            except Exception as e:
+                logger.error(f"Failed to process message from {channel_name}: {e}")
+                continue
 
         # Save messages to JSON files grouped by date
         for date_str, messages in messages_by_date.items():
@@ -87,7 +104,8 @@ async def main():
     logger.info(f"Message limit per channel: {SCRAPE_LIMIT}")
     logger.info("=" * 50)
 
-    async with TelegramClient("telegram_session", API_ID, API_HASH) as client:
+    session_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "telegram_session")
+    async with TelegramClient(session_path, API_ID, API_HASH) as client:
 
         # Login to Telegram
         await client.start(phone=PHONE)
