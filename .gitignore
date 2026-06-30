@@ -70,3 +70,7 @@ telegram_session*
 
 # Raw detection outputs
 data/raw/yolo_detections.csv
+
+# Dagster local files
+dagster.yaml
+dagster_home/

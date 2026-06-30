@@ -2328,17 +2328,7 @@ message_id,channel_name,class_name,confidence,image_category,image_path
 16548,Thequorachannel,person,0.8638,promotional,data/raw/images\Thequorachannel\16548.jpg
 16548,Thequorachannel,person,0.4813,promotional,data/raw/images\Thequorachannel\16548.jpg
 16550,Thequorachannel,none,0.0,other,data/raw/images\Thequorachannel\16550.jpg
-16551,Thequorachannel,chair,0.7325,promotional,data/raw/images\Thequorachannel\16551.jpg
-16551,Thequorachannel,chair,0.6704,promotional,data/raw/images\Thequorachannel\16551.jpg
-16551,Thequorachannel,chair,0.6098,promotional,data/raw/images\Thequorachannel\16551.jpg
-16551,Thequorachannel,chair,0.5778,promotional,data/raw/images\Thequorachannel\16551.jpg
-16551,Thequorachannel,chair,0.5703,promotional,data/raw/images\Thequorachannel\16551.jpg
-16551,Thequorachannel,chair,0.5533,promotional,data/raw/images\Thequorachannel\16551.jpg
-16551,Thequorachannel,chair,0.4945,promotional,data/raw/images\Thequorachannel\16551.jpg
-16551,Thequorachannel,chair,0.4885,promotional,data/raw/images\Thequorachannel\16551.jpg
-16551,Thequorachannel,chair,0.3996,promotional,data/raw/images\Thequorachannel\16551.jpg
-16551,Thequorachannel,chair,0.3904,promotional,data/raw/images\Thequorachannel\16551.jpg
-16551,Thequorachannel,chair,0.3064,promotional,data/raw/images\Thequorachannel\16551.jpg
+16551,Thequorachannel,none,0.0,other,data/raw/images\Thequorachannel\16551.jpg
 16552,Thequorachannel,refrigerator,0.5718,promotional,data/raw/images\Thequorachannel\16552.jpg
 16552,Thequorachannel,refrigerator,0.3693,promotional,data/raw/images\Thequorachannel\16552.jpg
 16553,Thequorachannel,tv,0.4717,promotional,data/raw/images\Thequorachannel\16553.jpg
@@ -2491,6 +2481,7 @@ message_id,channel_name,class_name,confidence,image_category,image_path
 16633,Thequorachannel,none,0.0,other,data/raw/images\Thequorachannel\16633.jpg
 16634,Thequorachannel,none,0.0,other,data/raw/images\Thequorachannel\16634.jpg
 16635,Thequorachannel,none,0.0,other,data/raw/images\Thequorachannel\16635.jpg
+16636,Thequorachannel,none,0.0,other,data/raw/images\Thequorachannel\16636.jpg
 196070,tikvahpharma,laptop,0.5637,promotional,data/raw/images\tikvahpharma\196070.jpg
 196070,tikvahpharma,cell phone,0.435,promotional,data/raw/images\tikvahpharma\196070.jpg
 196071,tikvahpharma,laptop,0.6673,promotional,data/raw/images\tikvahpharma\196071.jpg

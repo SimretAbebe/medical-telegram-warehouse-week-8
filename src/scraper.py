@@ -11,7 +11,7 @@ from src.utils import setup_logger, save_json, get_image_path, get_json_path
 
 load_dotenv()
 
-# Read credentials from .env
+
 API_ID = int(os.getenv("TELEGRAM_API_ID"))
 API_HASH = os.getenv("TELEGRAM_API_HASH")
 PHONE = os.getenv("TELEGRAM_PHONE")
@@ -105,7 +105,7 @@ async def main():
     logger.info("=" * 50)
 
     session_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "telegram_session")
-    async with TelegramClient(session_path, API_ID, API_HASH) as client:
+    async with TelegramClient("telegram_session", API_ID, API_HASH) as client:
 
         # Login to Telegram
         await client.start(phone=PHONE)

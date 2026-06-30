@@ -22,28 +22,45 @@ load_dotenv()
 
 @op
 def scrape_telegram_data(context: OpExecutionContext):
+    """
+    Step 1: Scrape Telegram channels.
+    Runs as subprocess to avoid session conflicts.
+    """
     logger = get_dagster_logger()
-  
-
-    logger.info("Starting Telegram scraping")
-    logger.info(f"Channels: {os.getenv('TELEGRAM_CHANNELS')}")
+    logger.info("Starting Telegram scraping...")
 
     try:
-        
-        import asyncio
-        from src.scraper import main as scraper_main
-        
+        result = subprocess.run(
+            ["python", "-m", "src.scraper"],
+            cwd=os.path.dirname(os.path.abspath(__file__)),
+            # os.path.abspath gives the FULL absolute path
+            # This ensures the session file is found correctly
+            env=os.environ.copy(),
+            capture_output=True,
+            text=True,
+            timeout=3600,
+            stdin=subprocess.DEVNULL
+            # stdin=DEVNULL = tell subprocess there is no keyboard input
+            # If Telethon asks for phone number it gets EOF immediately
+            # But with a valid session file it never needs to ask
+        )
 
-        asyncio.run(scraper_main())
-        
+        if result.stdout:
+            logger.info(result.stdout)
+        if result.stderr:
+            logger.warning(result.stderr)
 
-        logger.info("Telegram scraping completed successfully!")
+        if result.returncode != 0:
+            logger.warning(f"Scraper exited with code {result.returncode} — continuing pipeline with existing data")
+            # Don't raise — continue with existing data in the warehouse
+
+        logger.info("Scraping step complete!")
         return "scraping_done"
-        # Return a value so the next op knows this finished
 
     except Exception as e:
         logger.error(f"Scraping failed: {e}")
-        raise
+        logger.warning("Continuing pipeline with existing data...")
+        return "scraping_done"
         
 
 
@@ -247,10 +264,6 @@ def daily_pipeline_schedule(context: ScheduleEvaluationContext):
             "timezone": "Africa/Addis_Ababa"
         }
     )
-
-
-
-from dagster import Definitions
 
 defs = Definitions(
     jobs=[medical_telegram_pipeline],
